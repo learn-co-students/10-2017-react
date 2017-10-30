@@ -12,23 +12,65 @@ var data = [
 ];
 
 
+// class Component {
+//   constructor(props){
+//
+//   }
+// }
+
 class BooksTable extends React.Component {
+  constructor(props){
+      super(props)
+      this.state = {clicked: false}
+  }
+
+  handleOnClick(){
+    debugger;
+    this.setState({clicked: true})
+  }
   render(){
     let foobar = 'something cool'
     return(
-      <BookList anything={this.props.books} />
-      // React.createElement(BookList, {anything: 'whatever i want'})
+      <table>
+
+        <thead>
+        {this.state.clicked ? <div> hi</div> : null }
+          <th  onClick={this.handleOnClick.bind(this)}> Name </th>
+          <th>Category</th>
+        </thead>
+        <BookList books={this.props.books} />
+      </table>
     )
   }
 }
 
+class Component {
+  onClick(callbackFunction){
+    callbackFunction()
+  }
+}
+
+
 class BookList extends React.Component {
   render(){
-    
-    return(
-      <div> Foo</div>
+    let books = this.props.books.map(function(book, idx){
+      return(<BookRow idx={idx} book={book}/>)
+    })
+    return (
+      <tbody>
+        {books}
+      </tbody>
     )
   }
+}
+
+function BookRow(props){
+  return (
+    <tr key={props.idx}>
+      <td>{props.book.name} </td>
+      <td> {props.book.category}</td>
+    </tr>
+  )
 }
 
 // let div = React.createElement('div', {}, 'Hello World')
